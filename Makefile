@@ -1,4 +1,4 @@
-.PHONY: start stop restart
+.PHONY: start stop restart reload destroy
 
 start:
 	docker compose up -d
@@ -11,3 +11,6 @@ restart:
 
 reload:
 	docker compose kill --signal SIGHUP prometheus
+
+destroy:
+	docker compose down --stop --volumes
