@@ -1,6 +1,8 @@
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    build:
+      context: .
+      dockerfile: Dockerfile.elasticsearch
     environment:
       - discovery.type=single-node
     volumes:
@@ -15,6 +17,9 @@ services:
       start_period: 5s
 
   grafana:
+    build:
+      context: .
+      dockerfile: Dockerfile.grafana
     image: grafana/grafana-enterprise:8.3.3
     ports:
       - "3333:3000"
@@ -24,7 +29,9 @@ services:
       - o11y
 
   prometheus:
-    image: prom/prometheus:v2.32.1
+    build:
+      context: .
+      dockerfile: Dockerfile.prometheus
     ports:
       - "9090:9090"
     volumes:
@@ -34,7 +41,9 @@ services:
       - o11y
 
   jaeger:
-    image: jaegertracing/all-in-one:1.29.0
+    build:
+      context: .
+      dockerfile: Dockerfile.jaeger
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - ES_SERVER_URLS=http://elasticsearch:9200
